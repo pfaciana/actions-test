@@ -1,8 +1,5 @@
 name: Setup PHP with Composer
-on:
-  push:
-    branches:
-      - master
+on: [ push ]
 jobs:
   main:
     runs-on: ubuntu-latest

@@ -15,7 +15,9 @@ jobs:
           tools: composer:v2
 
       - name: Clean up
-        run: rm -rf .git .github .gitignore codeception.yml css/src gulpfile.js js/src package.json tests vendor
+        run: rm -rf .git .github .gitignore codeception.yml composer.lock css/src gulpfile.js js/src package.json tests vendor
+
+      - run: ls -la
 
       - name: Composer Install
         run: composer install
@@ -25,3 +27,17 @@ jobs:
         with:
           name: plugin
           path: .
+
+      - name: Get Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: plugin
+
+      - name: Display structure of downloaded files
+        run: ls -R
+
+      - name: Archive Release
+        uses: thedoctor0/zip-release@0.7.0
+        with:
+          type: 'zip'
+          filename: 'plugin.zip'

@@ -52,3 +52,9 @@ jobs:
           draft: false
           prerelease: false
           files: ./${{ github.event.repository.name }}.zip
+
+      - name: Dump Release output
+        run: echo "$RELEASE_OUTPUT"
+        shell: bash
+        env:
+          RELEASE_OUTPUT: ${{ fromJSON(steps.create_release.outputs.assets) }}

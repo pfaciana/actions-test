@@ -1,0 +1,21 @@
+{
+	"assets": [
+		{
+			"url": "https://api.github.com/repos/pfaciana/actions-test/releases/assets/91849627",
+			"id": 91849627,
+			"node_id": "RA_kwDOIxz4pc4FeYOb",
+			"name": "actions-test.zip",
+			"label": "",
+			"content_type": "application/zip",
+			"state": "uploaded",
+			"size": 23865,
+			"download_count": 0,
+			"created_at": "2023-01-16T07:14:46Z",
+			"updated_at": "2023-01-16T07:14:47Z",
+			"browser_download_url": "https://github.com/pfaciana/actions-test/releases/download/v0.0.15/actions-test.zip"
+		}
+	],
+	"url": "https://github.com/pfaciana/actions-test/releases/tag/v0.0.17",
+	"id": "89091294",
+	"upload_url": "https://uploads.github.com/repos/pfaciana/actions-test/releases/89091294/assets{?name,label}"
+}

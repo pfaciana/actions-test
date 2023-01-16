@@ -21,9 +21,6 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
 
-      - name: Echo Reop Name
-        run: echo "${{ github.event.repository.name }}";
-
       - name: Setup PHP w/ Composer
         uses: shivammathur/setup-php@v2
         with:
@@ -37,7 +34,7 @@ jobs:
         run: rm -rf .git .github .gitignore codeception.yml composer.lock css/src gulpfile.js js/src package.json tests
 
       - name: Zip Repo
-        run: zip -r actions-test.zip .
+        run: zip -r ${{ github.event.repository.name }}.zip .
 
       - name: Create Release w/ Asset
         id: create_release
@@ -54,4 +51,4 @@ jobs:
             - Third Change
           draft: false
           prerelease: false
-          files: ./actions-test.zip
+          files: ./${{ github.event.repository.name }}.zip

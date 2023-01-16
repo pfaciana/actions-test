@@ -1,0 +1,20 @@
+name: hello-world
+run-name: ${{ github.actor }} says Hi!
+
+on:
+  push:
+
+jobs:
+
+  saying-hi:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Hello world action step
+        id: hello
+        uses: ./.github/actions/hello-world-javascript-action
+        with:
+          who-to-greet: 'Phil'
+
+      - name: Get the output time
+        run: echo "The time was ${{ steps.hello.outputs.time }}"

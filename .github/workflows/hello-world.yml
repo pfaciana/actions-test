@@ -1,8 +1,7 @@
 name: hello-world
 run-name: ${{ github.actor }} says Hi!
 
-on:
-  push:
+on: [ delete ]
 
 jobs:
 

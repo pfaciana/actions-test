@@ -1,4 +1,6 @@
-name: Setup PHP with Composer
+name: make-wordpress-plugin
+run-name: Make WordPress Plugin
+
 on:
   push:
     tags:
@@ -13,6 +15,15 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
+      - name: Dump github context
+        run: echo "$GITHUB_CONTEXT"
+        shell: bash
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+
+      - name: Echo Reop Name
+        run: echo "${{ github.event.repository.name }}";
+
       - name: Setup PHP w/ Composer
         uses: shivammathur/setup-php@v2
         with:
@@ -25,11 +36,8 @@ jobs:
       - name: Clean up
         run: rm -rf .git .github .gitignore codeception.yml composer.lock css/src gulpfile.js js/src package.json tests
 
-      - name: Archive Release
-        uses: thedoctor0/zip-release@0.7.0
-        with:
-          type: 'zip'
-          filename: 'plugin.zip'
+      - name: Zip Repo
+        run: zip -r actions-test.zip .
 
       - name: Create Release w/ Asset
         id: create_release
@@ -46,4 +54,4 @@ jobs:
             - Third Change
           draft: false
           prerelease: false
-          files: ./plugin.zip
+          files: ./actions-test.zip

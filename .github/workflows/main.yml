@@ -17,24 +17,17 @@ jobs:
           php-version: '8.1'
           tools: composer:v2
 
-      - run: ls -la
-
       - name: Composer Install
         run: composer install
 
       - name: Clean up
         run: rm -rf .git .github .gitignore codeception.yml composer.lock css/src gulpfile.js js/src package.json tests
 
-      - name: Display structure of downloaded files
-        run: ls -R
-
       - name: Archive Release
         uses: thedoctor0/zip-release@0.7.0
         with:
           type: 'zip'
           filename: 'plugin.zip'
-
-      - run: ls -la
 
       - name: Create Release
         id: create_release

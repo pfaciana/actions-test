@@ -7,7 +7,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-
     - name: Setup git config name
       id: git-config-user-name
       run: git config --global user.name github-actions
@@ -15,7 +14,7 @@ runs:
 
     - name: Setup git config email
       id: git-config-user-email
-      run: git config --global user.email <>
+      run: git config --global user.email github-actions@github.com
       shell: bash
 
     - uses: actions/setup-node@v3
@@ -39,24 +38,24 @@ runs:
       shell: bash
 
     - name: Check if there are files to add
-      run: git_add=$(git ls-files --others --exclude-standard)
-      shell: bash
-
-    - name: Add files
-      if: ${#git_add} != 0
-      run: git add -A
+      run: echo "git_add=$(echo -n "$(git ls-files --others --exclude-standard)" | wc -m)" >> $GITHUB_ENV
       shell: bash
 
     - name: Check if there are files to commit
-      run: git_commit=$(git diff --compact-summary)
+      run: echo "git_commit=$(echo -n "$(git diff --compact-summary)" | wc -m)" >> $GITHUB_ENV
+      shell: bash
+
+    - name: Add files
+      if: ${{ env.git_add != 0 || env.git_commit != 0 }}
+      run: git add -A
       shell: bash
 
     - name: Commit files
-      if: ${#git_commit} != 0
+      if: ${{ env.git_add != 0 || env.git_commit != 0 }}
       run: git commit -m "build"
       shell: bash
 
     - name: Push files
-      if: ${#git_commit} != 0
+      if: ${{ ( env.git_add != 0 || env.git_commit != 0 ) && !env.ACT }}
       run: git push
       shell: bash

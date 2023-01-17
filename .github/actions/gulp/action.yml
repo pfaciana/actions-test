@@ -12,13 +12,12 @@ runs:
 
     - name: Setup git config name
       id: git-config-user-name
-      run: git config --global user.name ${{ env.GITHUB_NAME || 'github-actions' }}
+      run: git config --global user.name github-actions
       shell: bash
 
     - name: Setup git config email
       id: git-config-user-email
-      if: ${{ env.GITHUB_EMAIL }}
-      run: git config --global user.email ${{ env.GITHUB_EMAIL || 'github-actions@github.com' }}
+      run: git config --global user.email github-actions@github.com
       shell: bash
 
     - uses: actions/setup-node@v3
@@ -49,15 +48,14 @@ runs:
       run: git diff --compact-summary
       shell: bash
 
-    - name: Commit files
-      run: git commit -a -m "build"
+    - name: Add files
+      run: git add .
       shell: bash
 
-    - name: Make sure no commits left
-      run: git diff --compact-summary
+    - name: Commit files
+      run: git commit -m "build"
       shell: bash
 
     - name: Push files
-      if: ${{ !env.ACT }}
       run: git push
       shell: bash

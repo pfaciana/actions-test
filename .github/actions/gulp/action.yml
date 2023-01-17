@@ -8,24 +8,6 @@ runs:
   using: "composite"
   steps:
 
-    - name: Dump github context
-      run: echo "$GITHUB_CONTEXT"
-      shell: bash
-      env:
-        GITHUB_CONTEXT: ${{ toJson(github) }}
-
-    - name: Dump env context
-      run: echo "$ENV_CONTEXT"
-      shell: bash
-      env:
-        ENV_CONTEXT: ${{ toJson(env) }}
-
-    - run: git branch
-      shell: bash
-
-    - run: git branch --show-current
-      shell: bash
-
     - name: Setup git config name
       id: git-config-user-name
       run: git config --global user.name github-actions
@@ -33,7 +15,7 @@ runs:
 
     - name: Setup git config email
       id: git-config-user-email
-      run: git config --global user.email github-actions@github.com
+      run: git config --global user.email <>
       shell: bash
 
     - uses: actions/setup-node@v3
@@ -48,10 +30,6 @@ runs:
       run: rm package-lock.json
       shell: bash
 
-    - name: Show files after `npm i`
-      run: ls -la
-      shell: bash
-
     - name: Run Gulp Task Runner for 'js'
       run: npx gulp js
       shell: bash
@@ -60,32 +38,25 @@ runs:
       run: rm -rf node_modules
       shell: bash
 
-    - name: Show files after `gulp js`
-      run: ls js -R
-      shell: bash
-
-    - name: Show commits if applicable
-      run: git diff --compact-summary
+    - name: Check if there are files to add
+      run: git_add=$(git ls-files --others --exclude-standard)
       shell: bash
 
     - name: Add files
+      if: ${#git_add} != 0
       run: git add -A
       shell: bash
 
+    - name: Check if there are files to commit
+      run: git_commit=$(git diff --compact-summary)
+      shell: bash
+
     - name: Commit files
+      if: ${#git_commit} != 0
       run: git commit -m "build"
       shell: bash
 
-    - name: Make sure there are not commits left
-      run: git diff --compact-summary
-      shell: bash
-
-    - run: git branch
-      shell: bash
-
-    - run: git branch --show-current
-      shell: bash
-
     - name: Push files
+      if: ${#git_commit} != 0
       run: git push
       shell: bash

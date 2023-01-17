@@ -8,6 +8,18 @@ runs:
   using: "composite"
   steps:
 
+    - name: Dump github context
+      run: echo "$GITHUB_CONTEXT"
+      shell: bash
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+
+    - name: Dump env context
+      run: echo "$ENV_CONTEXT"
+      shell: bash
+      env:
+        ENV_CONTEXT: ${{ toJson(env) }}
+
     - run: git branch
       shell: bash
 

@@ -9,6 +9,8 @@ runs:
   steps:
     - name: Checkout Code
       uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
 
     - name: Setup git config name
       id: git-config-user-name
@@ -38,6 +40,10 @@ runs:
 
     - name: Run Gulp Task Runner for 'js'
       run: npx gulp js
+      shell: bash
+
+    - name: Remove `node_modules` when done
+      run: rm -rf node_modules
       shell: bash
 
     - name: Show files after `gulp js`

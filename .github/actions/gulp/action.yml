@@ -14,11 +14,13 @@ runs:
       id: git-config-user-name
       if: ${{ env.GITHUB_NAME }}
       run: git config --local user.name ${{ env.GITHUB_NAME }}
+      shell: bash
 
     - name: Setup git config email
       id: git-config-user-email
       if: ${{ env.GITHUB_EMAIL }}
       run: git config --local user.email ${{ env.GITHUB_EMAIL }}
+      shell: bash
 
     - uses: actions/setup-node@v3
       with:
@@ -26,28 +28,37 @@ runs:
 
     - name: Install npm packages
       run: npm install --quiet
+      shell: bash
 
     - name: Remove `package-lock.json` from repo
       run: rm package-lock.json
+      shell: bash
 
     - name: Show files after `npm i`
       run: ls -la
+      shell: bash
 
     - name: Run Gulp Task Runner for 'js'
       run: npx gulp js
+      shell: bash
 
     - name: Show files after `gulp js`
       run: ls js -R
+      shell: bash
 
     - name: Show commits if applicable
       run: git diff --compact-summary
+      shell: bash
 
     - name: Commit files
       run: git commit -a -m "build"
+      shell: bash
 
     - name: Make sure no commits left
       run: git diff --compact-summary
+      shell: bash
 
     - name: Push files
       if: ${{ !env.ACT }}
       run: git push --tags
+      shell: bash

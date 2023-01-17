@@ -1,7 +1,10 @@
 name: gulp-runner
 run-name: Run Gulp
 
-on: [ delete ]
+on:
+  push:
+    tags:
+      - 'v*'
 
 jobs:
 

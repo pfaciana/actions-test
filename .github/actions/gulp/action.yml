@@ -8,6 +8,12 @@ runs:
   using: "composite"
   steps:
 
+    - run: git branch
+      shell: bash
+
+    - run: git branch --show-current
+      shell: bash
+
     - name: Setup git config name
       id: git-config-user-name
       run: git config --global user.name github-actions
@@ -60,6 +66,12 @@ runs:
 
     - name: Make sure there are not commits left
       run: git diff --compact-summary
+      shell: bash
+
+    - run: git branch
+      shell: bash
+
+    - run: git branch --show-current
       shell: bash
 
     - name: Push files

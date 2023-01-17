@@ -1,8 +1,9 @@
 # ignore environment settings
 .idea/
 
-# ignore secrets
+# ignore secrets and local env
 *.secrets
+*local.env
 
 # ignore dependency directories
 node_modules/

@@ -49,11 +49,15 @@ runs:
       shell: bash
 
     - name: Add files
-      run: git add .
+      run: git add -A
       shell: bash
 
     - name: Commit files
       run: git commit -m "build"
+      shell: bash
+
+    - name: Make sure there are not commits left
+      run: git diff --compact-summary
       shell: bash
 
     - name: Push files

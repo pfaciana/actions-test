@@ -1,0 +1,32 @@
+{
+	"event": {
+		"repository": {
+			"default_branch": "master"
+		}
+	},
+	"event_path": "/var/run/act/workflow/event.json",
+	"workflow": "make-wordpress-plugin",
+	"run_id": "1",
+	"run_number": "1",
+	"actor": "nektos/act",
+	"repository": "pfaciana/actions-test",
+	"event_name": "push",
+	"sha": "c14018ac5b194f2b55d8c8ee26d1d6f3ac8a133b",
+	"ref": "refs/heads/master",
+	"ref_name": "master",
+	"ref_type": "branch",
+	"head_ref": "",
+	"base_ref": "",
+	"token": "***",
+	"workspace": "/mnt/d/Webs/_git/actions-test",
+	"action": "1",
+	"action_path": "",
+	"action_ref": "",
+	"action_repository": "",
+	"job": "",
+	"job_name": "",
+	"repository_owner": "pfaciana",
+	"retention_days": "0",
+	"runner_perflog": "/dev/null",
+	"runner_tracking_id": ""
+}

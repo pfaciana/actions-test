@@ -26,7 +26,7 @@
 		"gulp-insert": "^0",
 		"gulp-postcss": "^9",
 		"gulp-rename": "^2",
-		"gulp-sass": "^4",
+		"gulp-sass": "^5",
 		"gulp-size": "^4",
 		"gulp-terser": "^2",
 		"gulp-yarn": "^3",

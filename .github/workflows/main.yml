@@ -34,10 +34,13 @@ jobs:
         run: rm -rf .git .github .gitignore codeception.yml composer.lock css/src gulpfile.js js/src package.json tests
 
       - name: Zip Repo
-        run: zip -r ${{ github.event.repository.name }}.zip .
+        run: zip -r ${{ github.event.repository.name || 'plugin' }}.zip .
+
+      - run: ls -la
 
       - name: Create Release w/ Asset
         id: create_release
+        if: ${{ github.actor == github.repository_owner }}
         uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -51,10 +54,11 @@ jobs:
             - Third Change
           draft: false
           prerelease: false
-          files: ./${{ github.event.repository.name }}.zip
+          files: ./${{ github.event.repository.name || 'plugin'  }}.zip
 
       - name: Dump Release output
+        if: ${{ github.actor == github.repository_owner }}
         run: echo "$RELEASE_OUTPUT"
         shell: bash
         env:
-          RELEASE_OUTPUT: ${{ toJson(steps.create_release.outputs) }}
+          RELEASE_OUTPUT: ${{ steps.create_release.outputs }}

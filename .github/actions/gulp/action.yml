@@ -9,62 +9,45 @@ runs:
   steps:
     - name: Checkout Code
       uses: actions/checkout@v3
+
+    - name: Setup git config name
+      id: git-config-user-name
+      if: ${{ env.GITHUB_NAME }}
+      run: git config --local user.name ${{ env.GITHUB_NAME }}
+
+    - name: Setup git config email
+      id: git-config-user-email
+      if: ${{ env.GITHUB_EMAIL }}
+      run: git config --local user.email ${{ env.GITHUB_EMAIL }}
+
+    - uses: actions/setup-node@v3
       with:
-        fetch-depth: 0
+        node-version: '16'
 
-    - name: Dump github context
-      run: echo "$GITHUB_CONTEXT"
-      env:
-        GITHUB_CONTEXT: ${{ toJson(github) }}
+    - name: Install npm packages
+      run: npm install --quiet
 
-    - name: Dump env context
-      run: echo "$ENV_CONTEXT"
-      env:
-        ENV_CONTEXT: ${{ toJson(env) }}
-#
-#    - name: Setup git config name
-#      id: git-config-user-name
-#      if: ${{ env.GITHUB_NAME }}
-#      run: git config --local user.name ${{ env.GITHUB_NAME }}
-#
-#    - name: Setup git config email
-#      id: git-config-user-email
-#      if: ${{ env.GITHUB_EMAIL }}
-#      run: git config --local user.email ${{ env.GITHUB_EMAIL }}
-#
-#    - uses: actions/setup-node@v3
-#      with:
-#        node-version: '16'
-#
-#    - name: Remove existing js/dist
-#      run: rm -rf js/dist
-#
-#    - name: Show files after `rm -rf js/dist`
-#      run: ls -R
-#
-#    - name: Install npm packages
-#      run: npm install --quiet
-#
-#    - name: Remove `package-lock.json` from repo
-#      run: rm package-lock.json
-#
-#    - name: Show files after `npm i`
-#      run: ls -la
-#
-#    - name: Run Gulp Task Runner for 'js'
-#      run: npx gulp js
-#
-#    - name: Show files after `gulp js`
-#      run: ls js -R
-#
-#    - name: Show commits if applicable
-#      run: git diff --compact-summary
-#
-#    - name: Commit files
-#      run: git commit -a -m "build"
-#
-#    - name: Make sure no commits left
-#      run: git diff --compact-summary
+    - name: Remove `package-lock.json` from repo
+      run: rm package-lock.json
+
+    - name: Show files after `npm i`
+      run: ls -la
+
+    - name: Run Gulp Task Runner for 'js'
+      run: npx gulp js
+
+    - name: Show files after `gulp js`
+      run: ls js -R
+
+    - name: Show commits if applicable
+      run: git diff --compact-summary
+
+    - name: Commit files
+      run: git commit -a -m "build"
+
+    - name: Make sure no commits left
+      run: git diff --compact-summary
 
     - name: Push files
+      if: ${{ !env.ACT }}
       run: git push --tags

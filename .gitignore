@@ -4,7 +4,6 @@
 # ignore secrets and local env
 *.secrets
 *local.env
-*/**/gulp/*.yml
 
 # ignore dependency directories
 node_modules/

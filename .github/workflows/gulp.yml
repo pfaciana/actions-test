@@ -11,6 +11,8 @@ jobs:
   gulpfile:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+
       - id: gulp-js
         uses: ./.github/actions/gulp
         with:

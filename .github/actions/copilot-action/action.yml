@@ -1,0 +1,10 @@
+name: 'GitHub Copilot Test'
+description: 'Test GitHub Copilot'
+inputs:
+  token:
+    description: "Authorized secret GitHub Personal Access Token. Defaults to github.token"
+    required: false
+    default: ${{ github.token }}
+runs:
+  using: 'node16'
+  main: 'index.js'

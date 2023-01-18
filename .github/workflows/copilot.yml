@@ -1,0 +1,15 @@
+name: copilot
+run-name: Test GitHub Copilot
+
+on: [ push ]
+
+jobs:
+
+  copilot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: ./.github/actions/copilot-action
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}

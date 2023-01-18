@@ -1,0 +1,10 @@
+{
+	"name": "github-copilot",
+	"version": "1.2.3",
+	"description": "Testing with GitHub Copilot",
+	"main": "index.js",
+	"dependencies": {
+		"@actions/core": "^1",
+		"@actions/github": "^5"
+	}
+}

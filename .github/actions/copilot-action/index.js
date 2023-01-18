@@ -60,11 +60,11 @@ try {
 		console.log(uncommitted.toString().trim() === '' ? 'No files to commit' : 'Files to commit');
 
 		// using git check to see if there are files that need to be pushed
-		const ahead = process.execSync('git rev-list --count --left-only @{u}...HEAD');
+		const ahead = process.execSync('git rev-list --count --right-only @{u}...HEAD')
 		console.log(ahead.toString().trim() === '0' ? 'No files to push' : 'Files to push');
 
 		// using git check to see if there are files that need to be pulled
-		const behind = process.execSync('git rev-list --count --right-only @{u}...HEAD');
+		const behind = process.execSync('git rev-list --count --left-only @{u}...HEAD');
 		console.log(behind.toString().trim() === '0' ? 'No files to pull' : 'Files to pull');
 	})();
 } catch (error) {

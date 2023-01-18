@@ -45,15 +45,18 @@ try {
 		console.log(packageJson.version === tag ? 'Versions match' : 'Versions do not match');
 	};
 	(async () => {
-		// using git check to see if there are files that need to be committed
+		// using git check to see if there are files that need to be added/tracked
+		// Checks only for untracked files
 		const untracked = run.execSync('git ls-files --others --exclude-standard');
 		console.log(untracked.toString().trim() === '' ? 'No files to add' : 'Files to add');
 
-		// using git check to see if there are files that need to be added
+		// using git check to see if there are files that need to be staged
+		// Checks for modified files, and deleted files
 		const uncommitted = run.execSync('git diff --compact-summary');
 		console.log(uncommitted.toString().trim() === '' ? 'No files to commit' : 'Files to commit');
 
 		// using git check to see if there are files that have been modified
+		// Checks for untracked files, modified files, and deleted files
 		const modified = run.execSync('git status --porcelain');
 		console.log(modified.toString().trim() === '' ? 'No files modified' : 'Files modified');
 

@@ -38,24 +38,20 @@ runs:
       shell: bash
 
     - name: Check if there are files to add
-      run: echo "git_add=$(echo -n "$(git ls-files --others --exclude-standard)" | wc -m)" >> $GITHUB_ENV
-      shell: bash
-
-    - name: Check if there are files to commit
-      run: echo "git_commit=$(echo -n "$(git diff --compact-summary)" | wc -m)" >> $GITHUB_ENV
+      run: echo "git_modified=$(echo -n "$(git status --porcelain)" | wc -m)" >> $GITHUB_ENV
       shell: bash
 
     - name: Add files
-      if: ${{ env.git_add != 0 || env.git_commit != 0 }}
+      if: ${{ env.git_modified != 0 }}
       run: git add -A
       shell: bash
 
     - name: Commit files
-      if: ${{ env.git_add != 0 || env.git_commit != 0 }}
+      if: ${{ env.git_modified != 0 }}
       run: git commit -m "build"
       shell: bash
 
     - name: Push files
-      if: ${{ ( env.git_add != 0 || env.git_commit != 0 ) && !env.ACT }}
+      if: ${{ ( env.git_modified != 0 ) && !env.ACT }}
       run: git push
       shell: bash

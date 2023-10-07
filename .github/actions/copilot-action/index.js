@@ -44,7 +44,7 @@ try {
 		// compare package.json version and git tag and console log the result
 		console.log(packageJson.version === tag ? 'Versions match' : 'Versions do not match');
 	};
-	(async () => {
+	async () => {
 		// using git check to see if there are files that need to be added/tracked
 		// Checks only for untracked files
 		const untracked = run.execSync('git ls-files --others --exclude-standard');
@@ -68,10 +68,29 @@ try {
 		!process.env.ACT && process.execSync('git fetch');
 		const behind = run.execSync('git rev-list --count --left-only @{u}...HEAD');
 		console.log(behind.toString().trim() === '0' ? 'No files to pull' : 'Files to pull');
-	})();
+	};
+	async () => {
+		// stream output of node command line
+		const child = run.spawn('grep', ['-iron', 'phil', '.github']);
+		child.stdout.on('data', (data) => {
+			console.log(`stdout: ${data}`);
+		});
+		child.stderr.on('data', (data) => {
+			console.error(`stderr: ${data}`);
+		});
+		child.on('close', (code) => {
+			console.log(`child process exited with code ${code}`);
+			console.log('Done.');
+		});
+	};
+	// still streams out to node
+	const grepper = run.spawnSync('grep', ['-iron', 'phil', '.github']);
+	console.log(grepper.stdout.toString().trim());
+	console.log('Done.');
 } catch (error) {
 	core.setFailed(error.message);
 }
 
 
 // act -j gulpfile --secret-file .github/local.secrets --env-file .github/local.env
+// act -j copilot --secret-file .github/local.secrets --env-file .github/local.env

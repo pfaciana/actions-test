@@ -4,7 +4,8 @@ run-name: Make WordPress Plugin
 on:
   push:
     tags:
-      - 'v*'
+      - 'v*'  
+  workflow_dispatch:
 jobs:
   main:
     runs-on: ubuntu-latest

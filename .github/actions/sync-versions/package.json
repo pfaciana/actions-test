@@ -1,0 +1,12 @@
+{
+    "name": "sync-versions",
+    "version": "1.0.0",
+    "description": "Sync WordPress and Composer Versions",
+    "main": "index.js",
+    "dependencies": {
+        "@actions/core": "^1",
+        "@actions/github": "^5",
+        "fs-extra": "^11",
+        "semver": "^7"
+    }
+}

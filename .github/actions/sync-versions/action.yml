@@ -1,0 +1,15 @@
+name: Sync WordPress and Composer Versions
+description: Syncs the version number between a WordPress plugin and its composer.json file
+inputs:
+  main-file:
+    description: The relative path to the main PHP file of the WordPress plugin
+    required: false
+    default: ./index.php
+  github-token:
+    description: "Authorized secret GitHub Personal Access Token. Defaults to github.token"
+    required: false
+    default: ${{ github.token }}
+
+runs:
+  using: node20
+  main: index.js
